@@ -4,6 +4,7 @@ import { Link } from '../../../routes';
 import { Button, Table } from 'semantic-ui-react';
 import Campaign from '../../../ethereum/campaign';
 import RequestRow from '../../../components/RequestRow';
+import web3 from '../../../ethereum/web3';
 
 class RequestIndex extends Component {
 
@@ -11,6 +12,10 @@ class RequestIndex extends Component {
     const { address } = props.query;
 
     const campaign = Campaign(address);
+
+    const accounts = await web3.eth.getAccounts();
+    const currentAccount = accounts[0];
+    const campaignManager = await campaign.methods.manager().call();
     const requestCount = await campaign.methods.getRequestCount().call();
     const approversCount = await campaign.methods.approversCount().call();
 
@@ -22,7 +27,7 @@ class RequestIndex extends Component {
 
 
 
-    return { address, requests,requestCount, approversCount };
+    return { address, requests,requestCount, approversCount, campaignManager, currentAccount };
   }
 
   renderRows() {
@@ -33,6 +38,7 @@ class RequestIndex extends Component {
         request={request}
         address={this.props.address}
         approversCount={this.props.approversCount}
+
       />
     });
   }
@@ -46,7 +52,7 @@ class RequestIndex extends Component {
           <h3> Requests </h3>
           <Link route={`/campaigns/${this.props.address}/requests/new`}>
             <a>
-              <Button primary floated='right' style={{ marginBottom:10 }}>
+              <Button primary floated='right' style={{ marginBottom:10 }} disabled={this.props.campaignManager != this.props.currentAccount}>
                 Add Request
               </Button>
             </a>

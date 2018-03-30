@@ -15,6 +15,8 @@ class ContributeForm extends Component {
   onSubmit = async (event) => {
     event.preventDefault();
 
+    console.log(this.props.alreadyContributed + "from Component");
+
     const campaign = Campaign(this.props.address);
 
     this.setState( {loading: true, errorMessage:'' } );
@@ -48,7 +50,7 @@ class ContributeForm extends Component {
           />
         </Form.Field>
         <Message error header='Oops!' content={this.state.errorMessage} />
-        <Button primary loading={this.state.loading}>
+        <Button primary loading={this.state.loading} disabled={this.props.alreadyContributed}>
           Contribute!
         </Button>
       </Form>

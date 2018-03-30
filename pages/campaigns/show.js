@@ -10,9 +10,14 @@ class CampaignShow extends Component{
 
   static async getInitialProps(props){
     const campaign = Campaign(props.query.address);
-    console.log(campaign);
 
     const summary = await campaign.methods.getSummary().call();
+
+    const accounts = await web3.eth.getAccounts();
+
+    const alreadyContributed = await campaign.methods.approvers(accounts[0]).call();
+
+    console.log(alreadyContributed);
 
     return {
       address: props.query.address,
@@ -20,7 +25,10 @@ class CampaignShow extends Component{
       balance: summary[1],
       requestCount: summary[2],
       approversCount: summary[3],
-      manager: summary[4]
+      manager: summary[4],
+      contributed: alreadyContributed
+
+
 
     };
   }
@@ -78,7 +86,7 @@ class CampaignShow extends Component{
 
             </Grid.Column>
             <Grid.Column width={6}>
-              <ContributeForm address={this.props.address} />
+              <ContributeForm address={this.props.address} alreadyContributed={this.props.contributed} />
             </Grid.Column>
           </Grid.Row>
 
