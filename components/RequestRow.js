@@ -29,7 +29,7 @@ class RequestRow extends Component {
 
     const { Row, Cell } = Table;
     const {id, request, approversCount} = this.props;
-    const readyToFinalize = request.approvalCount >= approversCount/2;
+    const readyToFinalize = request.approvalCount > approversCount/2;
 
     return(
       <Row disabled={request.complete} positive={readyToFinalize && !request.complete}>
@@ -41,7 +41,7 @@ class RequestRow extends Component {
         <Cell>
           {request.complete ? null: (
               <Button color='green' basic onClick={this.onApprove}>
-                  Approve
+                  Aprobar
               </Button>
             )
           }
@@ -49,7 +49,7 @@ class RequestRow extends Component {
         <Cell>
         {request.complete ? null: (
             <Button color='teal' basic onClick={this.onFinalize}>
-              Finalize
+              Finalizar
             </Button>
           )
 

@@ -9,27 +9,33 @@ import { Link } from '../../routes';
 class CampaignShow extends Component{
 
   static async getInitialProps(props){
+
     const campaign = Campaign(props.query.address);
 
     const summary = await campaign.methods.getSummary().call();
+
+    if (summary[1] == '0') {
+      summary[1] = '-'
+    }
+
+    if (summary[2] == '0') {
+      summary[2] = '-'
+    }
 
     const accounts = await web3.eth.getAccounts();
 
     const alreadyContributed = await campaign.methods.approvers(accounts[0]).call();
 
-    console.log(alreadyContributed);
-
     return {
       address: props.query.address,
       minimumContribution: summary[0],
-      balance: summary[1],
-      requestCount: summary[2],
-      approversCount: summary[3],
-      manager: summary[4],
+      maximumContribution: summary[1],
+      maximumContributors: summary[2],
+      balance: summary[3],
+      requestCount: summary[4],
+      approversCount: summary[5],
+      manager: summary[6],
       contributed: alreadyContributed
-
-
-
     };
   }
 
@@ -39,6 +45,8 @@ class CampaignShow extends Component{
       balance,
       manager,
       minimumContribution,
+      maximumContribution,
+      maximumContributors,
       requestCount,
       approversCount
     } = this.props;
@@ -46,29 +54,39 @@ class CampaignShow extends Component{
     const items = [
       {
         header: manager,
-        meta: 'Address of the manager',
-        description: 'The manager created this campaign and can create requests to withdraw money',
+        meta: 'Direccion del gerente',
+        description: 'Gerente que creo la campaña, puede crear solicitudes y enviar dinero de la campaña.',
         style: {overflowWrap: 'break-word'}
       },
       {
         header: minimumContribution,
-        meta: 'Minimum contribution (wei)',
-        description: 'You must contribute at least this much wei to become an approver'
+        meta: 'Contribucion minima (wei)',
+        description: 'Para convertirse en contribuyente debe aportar al menos esta cantidad de wei.'
+      },
+      {
+        header: maximumContribution,
+        meta: 'Contribucion maxima (wei)',
+        description: 'Para convertirse en contribuyente debe aportar como maximo esta cantidad de wei.'
+      },
+      {
+        header: maximumContributors ,
+        meta: 'Cantidad maxima de contribuyentes',
+        description: 'Numero maximo de contribuyentes que pueden aportar a esta campaña.'
       },
       {
         header: requestCount,
-        meta: 'Number of requests',
-        description: 'A request tries to withdraw money from the contract. Requests must be approved by approvers'
+        meta: 'Numero de solicitudes',
+        description: 'Una solicitud envia fondos de la campaña acual. Las solicitudes deben ser aprobadas por los contribuyentes.'
       },
       {
         header: approversCount,
-        meta: 'Number of approvers',
-        description: 'Number of people who have already donated to this campaign'
+        meta: 'Numero de contribuyentes',
+        description: 'Cantidad de personas que han contribuido a esta campaña.'
       },
       {
         header: web3.utils.fromWei(balance, 'ether'),
-        meta: 'Campaign balance (ether)',
-        description: 'The balance is how much money this campaign has left to spend'
+        meta: 'Balance de la campaña (ether)',
+        description: 'El balance de la campaña es cuanto dinero tiene esta campaña para gastar.'
       }
     ];
 
@@ -78,7 +96,7 @@ class CampaignShow extends Component{
   render(){
     return(
       <Layout>
-        <h3> Campaign Show </h3>
+        <h3> Informacion de la campaña </h3>
         <Grid>
           <Grid.Row>
             <Grid.Column width={10}>
@@ -95,7 +113,7 @@ class CampaignShow extends Component{
             <Link route={`/campaigns/${this.props.address}/requests`}>
               <a>
                 <Button primary>
-                  View Requests
+                  Ver solicitudes
                 </Button>
               </a>
             </Link>

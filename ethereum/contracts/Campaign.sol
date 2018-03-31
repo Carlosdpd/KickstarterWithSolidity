@@ -3,8 +3,8 @@ pragma solidity  ^0.4.17;
 contract CampaignFactory{
     address[] public deployedCampaigns;
 
-    function createCampaign(uint minimum) public{
-        address newCampaign = new Campaign(minimum, msg.sender);
+    function createCampaign(uint minimum, uint maximum, uint maxCont) public{
+        address newCampaign = new Campaign(minimum, maximum, maxCont, msg.sender);
         deployedCampaigns.push(newCampaign);
     }
 
@@ -30,6 +30,8 @@ contract Campaign{
     Request[] public requests;
     address public manager;
     uint public minimumContribution;
+    uint public maximumContribution;
+    uint public maxContributors;
     mapping (address => bool) public approvers;
     uint public approversCount;
 
@@ -39,13 +41,18 @@ contract Campaign{
         _;
     }
 
-    function Campaign(uint minimum, address creator) public{
+    function Campaign(uint minimum, uint maximum, uint maxCont, address creator) public{
         manager = creator;
         minimumContribution = minimum;
+        maximumContribution =  maximum;
+        maxContributors = maxCont;
+
     }
 
     function contribute() public payable{
-        require (msg.value > minimumContribution);
+        require (msg.value > minimumContribution &&
+            (msg.value < maximumContribution || maximumContribution == 0 )&&
+            (approversCount < maxContributors || maxContributors == 0));
 
         approvers[msg.sender] = true;
         approversCount++;
@@ -86,9 +93,11 @@ contract Campaign{
         request.complete = true;
     }
 
-    function getSummary() public view returns(uint, uint, uint, uint, address){
+    function getSummary() public view returns(uint, uint, uint, uint, uint, uint, address){
         return (
           minimumContribution,
+          maximumContribution,
+          maxContributors,
           this.balance,
           requests.length,
           approversCount,
@@ -98,7 +107,5 @@ contract Campaign{
 
     function getRequestCount() public view returns(uint){
         return requests.length;
-    }
-
-
+    }    
 }

@@ -49,11 +49,11 @@ class RequestIndex extends Component {
 
     return(
       <Layout>
-          <h3> Requests </h3>
+          <h3> Solicitudes </h3>
           <Link route={`/campaigns/${this.props.address}/requests/new`}>
             <a>
               <Button primary floated='right' style={{ marginBottom:10 }} disabled={this.props.campaignManager != this.props.currentAccount}>
-                Add Request
+                Crear solicitud
               </Button>
             </a>
           </Link>
@@ -62,19 +62,19 @@ class RequestIndex extends Component {
             <Header>
               <Row>
                 <HeaderCell> ID </HeaderCell>
-                <HeaderCell> Description </HeaderCell>
-                <HeaderCell> Amout </HeaderCell>
-                <HeaderCell> Recipient </HeaderCell>
-                <HeaderCell> Approval Count </HeaderCell>
-                <HeaderCell> Approve </HeaderCell>
-                <HeaderCell> Finalize </HeaderCell>
+                <HeaderCell> Descripcion </HeaderCell>
+                <HeaderCell> Monto (ether) </HeaderCell>
+                <HeaderCell> Destino </HeaderCell>
+                <HeaderCell> Cuenta de aprobados </HeaderCell>
+                <HeaderCell> Aprobar </HeaderCell>
+                <HeaderCell> Finalizar </HeaderCell>
               </Row>
             </Header>
             <Body>
               {this.renderRows()}
             </Body>
           </Table>
-          <div> Found {this.props.requestCount} requests. </div>
+          <div> Encontradas {this.props.requestCount} solicitudes. </div>
 
       </Layout>
     );

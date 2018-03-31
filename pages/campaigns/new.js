@@ -9,6 +9,8 @@ class CampaignNew extends Component {
 
   state = {
     minimumContribution: '',
+    maximumContribution: '',
+    maximumCont:'',
     errorMessage: '',
     loading: false
   }
@@ -19,7 +21,9 @@ class CampaignNew extends Component {
     this.setState({ loading: true, errorMessage: '' });
     try {
       const accounts = await web3.eth.getAccounts();
-      await factory.methods.createCampaign(this.state.minimumContribution).send({
+      await factory.methods.createCampaign(this.state.minimumContribution,
+            this.state.maximumContribution,
+            this.state.maximumCont).send({
           from: accounts[0]
       });
 
@@ -36,11 +40,11 @@ class CampaignNew extends Component {
   render(){
     return(
       <Layout>
-        <h3> Create a Campaign </h3>
+        <h3> Crear una campaña </h3>
 
         <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
           <Form.Field>
-            <label> Minimum Contribution </label>
+            <label> Contribucion minima </label>
             <Input
               labelPosition='right'
               label='wei'
@@ -49,8 +53,26 @@ class CampaignNew extends Component {
              />
           </Form.Field>
 
+          <Form.Field>
+            <label> Contributacion maxima </label>
+            <Input
+              labelPosition='right'
+              label='wei'
+              value={this.state.maximumContribution}
+              onChange={event => this.setState({ maximumContribution: event.target.value })}
+             />
+          </Form.Field>
+
+          <Form.Field>
+            <label> Numero maximo de contribuyentes </label>
+            <Input
+              value={this.state.maximumCont}
+              onChange={event => this.setState({ maximumCont: event.target.value })}
+             />
+          </Form.Field>
+
           <Message error header='Oops!' content={this.state.errorMessage} />
-          <Button loading={this.state.loading} primary >Create!</Button>
+          <Button loading={this.state.loading} primary >¡Crear!</Button>
         </Form>
       </Layout>
     );
