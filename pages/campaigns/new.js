@@ -46,6 +46,7 @@ class CampaignNew extends Component {
           <Form.Field>
             <label> Contribucion minima </label>
             <Input
+              placeholder='Cantidad minima de wei con la que se puede contribuir a la campaña'
               labelPosition='right'
               label='wei'
               value={this.state.minimumContribution}
@@ -56,6 +57,7 @@ class CampaignNew extends Component {
           <Form.Field>
             <label> Contributacion maxima </label>
             <Input
+              placeholder='Cantidad maxima de wei con la que se puede contribuir a la campaña, coloque 0 si no desea poner un limite maximo'
               labelPosition='right'
               label='wei'
               value={this.state.maximumContribution}
@@ -66,6 +68,7 @@ class CampaignNew extends Component {
           <Form.Field>
             <label> Numero maximo de contribuyentes </label>
             <Input
+              placeholder='Cantidad maxima de cotribuyentes que desea en su campaña, coloque 0 si no desea poner un limite de contribuyentes'
               value={this.state.maximumCont}
               onChange={event => this.setState({ maximumCont: event.target.value })}
              />

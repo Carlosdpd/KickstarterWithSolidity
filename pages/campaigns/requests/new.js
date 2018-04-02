@@ -13,7 +13,6 @@ class RequestNew extends Component{
       recipient:'',
       loading: false,
       errorMessage: ''
-
   };
 
   static async getInitialProps(props){
@@ -54,29 +53,32 @@ class RequestNew extends Component{
 
         <Link route={`/campaigns/${this.props.address}/requests`}>
           <a>
-              Back
+              Atras
           </a>
         </Link>
 
-        <h3> Create a Request </h3>
+        <h3> Crear una nueva solicitud </h3>
         <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
           <Form.Field>
-            <label> Description </label>
+            <label> Descripcion </label>
             <Input
+              placeholder='Descripcion de su solicitud'
               value={this.state.description}
               onChange={event => this.setState({ description: event.target.value })}
             />
           </Form.Field>
           <Form.Field>
-            <label> Value in Ether</label>
+            <label> Monto en ether</label>
             <Input
+              placeholder='Monto que desea retirar de la campaña'
               value={this.state.value}
               onChange={event => this.setState({ value: event.target.value })}
              />
           </Form.Field>
           <Form.Field>
-            <label> Recipient </label>
+            <label> Destino </label>
             <Input
+              placeholder='Direccion destino a la que iran los fondos de su solicitud'
               value={this.state.recipient}
               onChange={event => this.setState({ recipient: event.target.value })}
              />
@@ -84,7 +86,7 @@ class RequestNew extends Component{
 
           <Message error header='Oops!' content={this.state.errorMessage} />
           <Button primary loading={this.state.loading}>
-            Create!
+            ¡Crear!
           </Button>
         </Form>
       </Layout>

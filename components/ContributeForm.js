@@ -41,6 +41,7 @@ class ContributeForm extends Component {
         <Form.Field>
           <label> Monto de contribucion </label>
           <Input
+            placeholder='Cantidad de ether con la que desea contribuir'
             value={this.state.value}
             onChange= {event => this.setState({ value:event.target.value })}
             label='ether'
