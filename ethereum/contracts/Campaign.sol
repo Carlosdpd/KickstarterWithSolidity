@@ -55,9 +55,10 @@ contract Campaign{
             (msg.value < maximumContribution || maximumContribution == 0 )&&
             (approversCount < maxContributors || maxContributors == 0));
 
-        approvers[msg.sender] = true;
-        approversCount++;
-
+        if( approvers[msg.sender] == false){
+          approvers[msg.sender] = true;
+          approversCount++;
+        }
     }
 
     function createRequest(string description, uint value, address recipient) public restricted {

@@ -65,7 +65,7 @@ class ContributeForm extends Component {
           />
         </Form.Field>
         <Message error header='Hubo un error, tome en cuenta las siguientes consideraciones' list={this.state.errorMessage} />
-        <Button primary loading={this.state.loading} disabled={this.props.alreadyContributed}>
+        <Button primary loading={this.state.loading}>
           ¡Contribuir!
         </Button>
       </Form>

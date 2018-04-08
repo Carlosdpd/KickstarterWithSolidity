@@ -24,8 +24,6 @@ class CampaignShow extends Component{
 
     const accounts = await web3.eth.getAccounts();
 
-    const alreadyContributed = await campaign.methods.approvers(accounts[0]).call();
-
     return {
       address: props.query.address,
       minimumContribution: summary[0],
@@ -35,7 +33,6 @@ class CampaignShow extends Component{
       requestCount: summary[4],
       approversCount: summary[5],
       manager: summary[6],
-      contributed: alreadyContributed
     };
   }
 
@@ -104,7 +101,7 @@ class CampaignShow extends Component{
 
             </Grid.Column>
             <Grid.Column width={6}>
-              <ContributeForm address={this.props.address} alreadyContributed={this.props.contributed} />
+              <ContributeForm address={this.props.address}/>
             </Grid.Column>
           </Grid.Row>
 
