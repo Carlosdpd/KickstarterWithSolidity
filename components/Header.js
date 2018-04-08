@@ -7,7 +7,7 @@ export default () => {
     <Menu style = {{ marginTop: '10px' }} >
       <Link route='/'>
         <a className='item'>
-          Financiacion Colectiva
+          Financiación Colectiva
         </a>
       </Link>
 

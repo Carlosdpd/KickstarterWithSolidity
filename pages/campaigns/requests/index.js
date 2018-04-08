@@ -62,7 +62,7 @@ class RequestIndex extends Component {
             <Header>
               <Row>
                 <HeaderCell> ID </HeaderCell>
-                <HeaderCell> Descripcion </HeaderCell>
+                <HeaderCell> Descripción </HeaderCell>
                 <HeaderCell> Monto (ether) </HeaderCell>
                 <HeaderCell> Destino </HeaderCell>
                 <HeaderCell> Cuenta de aprobados </HeaderCell>

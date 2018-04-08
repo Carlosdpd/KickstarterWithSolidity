@@ -27,11 +27,28 @@ class CampaignNew extends Component {
           from: accounts[0]
       });
 
+      const lastCampaing =  await factory.methods.getDeployedCampaigns().call();
+
+      fetch('http://192.168.2.9:8000/campaign', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          campaignManager: accounts[0],
+          campaignAddress: lastCampaing[lastCampaing.length - 1],
+          minimumContribution: this.state.minimumContribution,
+          maximumContribution: this.state.maximumContribution,
+          maximumCont: this.state.maximumCont
+        })
+      });
+
       Router.pushRoute('/');
 
     } catch (err) {
 
-      this.setState({ errorMessage: err.message });
+      this.setState({ errorMessage: ['Asegúrese de ingresar un número válido de ether o wei (Sin letras)', 'En caso de ser una lista, no deje elementos en blanco', 'Verifique estar usando su plug-in Metamask', 'Verifique su lista de transacciones pendientes'] });
     }
 
     this.setState({ loading: false });
@@ -44,9 +61,9 @@ class CampaignNew extends Component {
 
         <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
           <Form.Field>
-            <label> Contribucion minima </label>
+            <label> Contribución mínima </label>
             <Input
-              placeholder='Cantidad minima de wei con la que se puede contribuir a la campaña'
+              placeholder='Cantidad mínima de wei con la que se puede contribuir a la campaña'
               labelPosition='right'
               label='wei'
               value={this.state.minimumContribution}
@@ -55,9 +72,9 @@ class CampaignNew extends Component {
           </Form.Field>
 
           <Form.Field>
-            <label> Contributacion maxima </label>
+            <label> Contribución máxima </label>
             <Input
-              placeholder='Cantidad maxima de wei con la que se puede contribuir a la campaña, coloque 0 si no desea poner un limite maximo'
+              placeholder='Cantidad máxima de wei con la que se puede contribuir a la campaña, coloque 0 si no desea establecer un límite máximo'
               labelPosition='right'
               label='wei'
               value={this.state.maximumContribution}
@@ -66,15 +83,15 @@ class CampaignNew extends Component {
           </Form.Field>
 
           <Form.Field>
-            <label> Numero maximo de contribuyentes </label>
+            <label> Número máximo de contribuyentes </label>
             <Input
-              placeholder='Cantidad maxima de cotribuyentes que desea en su campaña, coloque 0 si no desea poner un limite de contribuyentes'
+              placeholder='Cantidad maxima de cotribuyentes que desea en su campaña, coloque 0 si no desea establecer un límite de contribuyentes'
               value={this.state.maximumCont}
               onChange={event => this.setState({ maximumCont: event.target.value })}
              />
           </Form.Field>
 
-          <Message error header='Oops!' content={this.state.errorMessage} />
+          <Message error header='Hubo un error, tome en cuenta las siguientes consideraciones' list={this.state.errorMessage} />
           <Button loading={this.state.loading} primary >¡Crear!</Button>
         </Form>
       </Layout>

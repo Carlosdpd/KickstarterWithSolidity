@@ -23,6 +23,19 @@ class RequestRow extends Component {
         from: accounts[0]
       });
 
+      fetch('http://192.168.2.9:8000/approved', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          campaign: this.props.address,
+          approverAddress: accounts[0],
+          id: this.props.id
+        })
+      })
+
       Router.replaceRoute(`/campaigns/${this.props.address}/requests`);
     } catch (err) {
       this.setState( {errorMessage: err.message} );
@@ -44,6 +57,19 @@ class RequestRow extends Component {
       await campaign.methods.finalizeRequest(this.props.id).send({
         from: accounts[0]
       });
+
+      fetch('http://192.168.2.9:8000/finalized', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          campaign: this.props.address,
+          campaignManager: accounts[0],
+          id: this.props.id
+        })
+      })
 
       Router.replaceRoute(`/campaigns/${this.props.address}/requests`);
     } catch (err) {

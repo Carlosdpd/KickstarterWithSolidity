@@ -4,6 +4,8 @@ const app = next({
   dev: process.env.NODE_ENV !== 'production '
 });
 
+const serverside = require('./server/app.js');
+
 const routes = require('./routes');
 
 const handler = routes.getRequestHandler(app);

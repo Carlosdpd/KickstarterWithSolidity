@@ -37,10 +37,24 @@ class RequestNew extends Component{
         await campaign.methods.createRequest(description, web3.utils.toWei(value, 'ether'), recipient)
         .send({ from: accounts[0] });
 
+        fetch('http://192.168.2.9:8000/request', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            campaignManager: accounts[0],
+            toAddress: recipient,
+            value: web3.utils.toWei(value, 'ether'),
+            description: description,
+          })
+        });
+
         Router.pushRoute(`/campaigns/${this.props.address}/requests`);
 
     } catch (err) {
-      this.setState({ errorMessage: err.message })
+      this.setState({ errorMessage: ['Asegúrese de ingresar un número válido de ether o wei (Sin letras)', 'En caso de ser una lista, no deje elementos en blanco', 'Verifique estar usando su plug-in Metamask', 'Verifique su lista de transacciones pendientes'] })
     }
 
     this.setState({ loading: false })
@@ -60,9 +74,9 @@ class RequestNew extends Component{
         <h3> Crear una nueva solicitud </h3>
         <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
           <Form.Field>
-            <label> Descripcion </label>
+            <label> Descripción </label>
             <Input
-              placeholder='Descripcion de su solicitud'
+              placeholder='Descripción de su solicitud'
               value={this.state.description}
               onChange={event => this.setState({ description: event.target.value })}
             />
@@ -78,13 +92,13 @@ class RequestNew extends Component{
           <Form.Field>
             <label> Destino </label>
             <Input
-              placeholder='Direccion destino a la que iran los fondos de su solicitud'
+              placeholder='Dirección destino a la que irán los fondos de su solicitud'
               value={this.state.recipient}
               onChange={event => this.setState({ recipient: event.target.value })}
              />
           </Form.Field>
 
-          <Message error header='Oops!' content={this.state.errorMessage} />
+          <Message error header='Hubo un error, tome en cuenta las siguientes consideraciones' list={this.state.errorMessage} />
           <Button primary loading={this.state.loading}>
             ¡Crear!
           </Button>

@@ -54,33 +54,33 @@ class CampaignShow extends Component{
     const items = [
       {
         header: manager,
-        meta: 'Direccion del gerente',
-        description: 'Gerente que creo la campaña, puede crear solicitudes y enviar dinero de la campaña.',
+        meta: 'Dirección del gerente',
+        description: 'Gerente que creó la campaña, puede crear solicitudes y enviar dinero de la campaña.',
         style: {overflowWrap: 'break-word'}
       },
       {
         header: minimumContribution,
-        meta: 'Contribucion minima (wei)',
+        meta: 'Contribución mínima (wei)',
         description: 'Para convertirse en contribuyente debe aportar al menos esta cantidad de wei.'
       },
       {
         header: maximumContribution,
-        meta: 'Contribucion maxima (wei)',
-        description: 'Para convertirse en contribuyente debe aportar como maximo esta cantidad de wei.'
+        meta: 'Contribución máxima (wei)',
+        description: 'Para convertirse en contribuyente puede aportar como máximo esta cantidad de wei.'
       },
       {
         header: maximumContributors ,
-        meta: 'Cantidad maxima de contribuyentes',
-        description: 'Numero maximo de contribuyentes que pueden aportar a esta campaña.'
+        meta: 'Cantidad máxima de contribuyentes',
+        description: 'Número máximo de contribuyentes que pueden aportar a esta campaña.'
       },
       {
         header: requestCount,
-        meta: 'Numero de solicitudes',
-        description: 'Una solicitud envia fondos de la campaña acual. Las solicitudes deben ser aprobadas por los contribuyentes.'
+        meta: 'Número de solicitudes',
+        description: 'Una solicitud envía fondos de la campaña actual. Las solicitudes deben ser aprobadas por los contribuyentes.'
       },
       {
         header: approversCount,
-        meta: 'Numero de contribuyentes',
+        meta: 'Número de contribuyentes',
         description: 'Cantidad de personas que han contribuido a esta campaña.'
       },
       {
@@ -96,7 +96,7 @@ class CampaignShow extends Component{
   render(){
     return(
       <Layout>
-        <h3> Informacion de la campaña </h3>
+        <h3> Información de la campaña </h3>
         <Grid>
           <Grid.Row>
             <Grid.Column width={10}>

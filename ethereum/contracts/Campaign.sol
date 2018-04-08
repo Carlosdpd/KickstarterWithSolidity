@@ -42,6 +42,7 @@ contract Campaign{
     }
 
     function Campaign(uint minimum, uint maximum, uint maxCont, address creator) public{
+        require (minimum > 0);
         manager = creator;
         minimumContribution = minimum;
         maximumContribution =  maximum;
@@ -107,5 +108,5 @@ contract Campaign{
 
     function getRequestCount() public view returns(uint){
         return requests.length;
-    }    
+    }
 }
