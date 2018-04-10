@@ -18,7 +18,7 @@ beforeEach(async () => {
     deploy({ data: compiledFactory.bytecode }).
     send({ from: accounts[0], gas: '1000000' });
 
-  await factory.methods.createCampaign('100').send({
+  await factory.methods.createCampaign('100','0','0').send({
     from: accounts[0],
     gas: '1000000'
   });

@@ -8,8 +8,8 @@ contract CampaignFactory{
     address[] public deployedCampaigns;
 
     //Función que genera instancias del contrato Campaign, recibe un monto mínimo de contribución, un monto máximo, y un número máximo de contribuyentes
-    function createCampaign(uint minimum, uint maximum, uint maxCont) public{
-        address newCampaign = new Campaign(minimum, maximum, maxCont, msg.sender);
+    function createCampaign(uint minimum, uint maximum, uint maxCont, uint approveRate, uint rejectRate) public{
+        address newCampaign = new Campaign(minimum, maximum, maxCont, msg.sender, approveRate, rejectRate);
 
         //Una vez creada la instancia, se agrega al arreglo de direcciones de instancias de Campaigns
         deployedCampaigns.push(newCampaign);
@@ -66,6 +66,14 @@ contract Campaign{
     //Número máximo de contribuyentes
     uint public maxContributors;
 
+    //Número para el porcentaje de aprobación
+    uint public approvalRate;
+
+    //Número para el porcentaje de rechazo
+    uint public rejectedRate;
+
+    uint public test2;
+
     //Mapeo de direcciones a valores booleanos que representan la lista de contribuyentes votantes
     mapping (address => bool) public approvers;
 
@@ -83,12 +91,17 @@ contract Campaign{
     }
 
     //Constructor del contrato, recibe sus parámetros desde la función createCampaign de CampaignFactory
-    function Campaign(uint minimum, uint maximum, uint maxCont, address creator) public{
+    function Campaign(uint minimum, uint maximum, uint maxCont, address creator, uint approveRate, uint rejectRate) public{
         require (minimum > 0);
         manager = creator;
         minimumContribution = minimum;
         maximumContribution =  maximum;
         maxContributors = maxCont;
+        approvalRate = approveRate;
+        rejectedRate = rejectRate;
+
+        test2 = (30*(approvalRate))/100;
+
 
     }
 
@@ -184,16 +197,28 @@ contract Campaign{
         Request storage request = requests[index];
 
         //Es requerido que hayan votado positivamente más de la mitad de los contribuyentes
-        require(request.approvalCount > (approversCount / 2));
+        require((request.approvalCount > (approversCount*(approvalRate))/100) || (request.rejectsCount > (approversCount*(rejectedRate))/100));
 
         //Es requerido, además, que la solicitud no haya sido marcada como completada
         require(!request.complete);
 
-        //Se transfieren los fondos a la dirección destindo
-        request.recipient.transfer(request.value);
+        //Si es el caso de aprobación, se traspasa el dinero
+        if(request.approvalCount > (approversCount*(approvalRate))/100){
 
-        //Se marca la solicitud como completada
-        request.complete = true;
+            //Se transfieren los fondos a la dirección destindo
+            request.recipient.transfer(request.value);
+
+            //Se marca la solicitud como completada
+            request.complete = true;
+        }
+
+        //En caso que haya sido rechazo, se finaliza la solicitud sin enviar fondos
+        if(request.rejectsCount > (approversCount*(rejectedRate))/100){
+
+            //Se marca la solicitud como completada
+            request.complete = true;
+        }
+
     }
 
     //Función que retorna un resumen de la campaña
