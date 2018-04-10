@@ -66,6 +66,8 @@ class RequestIndex extends Component {
                 <HeaderCell> Monto (ether) </HeaderCell>
                 <HeaderCell> Destino </HeaderCell>
                 <HeaderCell> Cuenta de aprobados </HeaderCell>
+                <HeaderCell> Cuenta de rechazados </HeaderCell>
+                <HeaderCell> Rechazar </HeaderCell>
                 <HeaderCell> Aprobar </HeaderCell>
                 <HeaderCell> Finalizar </HeaderCell>
               </Row>

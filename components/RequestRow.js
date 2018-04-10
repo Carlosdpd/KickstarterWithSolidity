@@ -2,7 +2,7 @@ import React, { Component } from  'react';
 import { Table, Button, Message } from  'semantic-ui-react';
 import web3 from '../ethereum/web3';
 import Campaing from '../ethereum/campaign';
-import { Router } from '../routes';
+import { Router, Link } from '../routes';
 
 class RequestRow extends Component {
 
@@ -88,13 +88,27 @@ class RequestRow extends Component {
     const readyToFinalize = request.approvalCount > approversCount/2;
 
     return(
-      <Row disabled={request.complete} positive={readyToFinalize && !request.complete}>
-        <Cell> {id} </Cell>
-        <Cell> {request.description} </Cell>
-        <Cell> {web3.utils.fromWei(request.value, 'ether')} </Cell>
-        <Cell> {request.recipient} </Cell>
-        <Cell> {request.approvalCount}/{approversCount} </Cell>
-        <Cell>
+      <Row  positive={readyToFinalize && !request.complete}>
+        <Cell disabled={request.complete}> {id} </Cell>
+        <Cell disabled={request.complete}> {request.description} </Cell>
+        <Cell disabled={request.complete}> {web3.utils.fromWei(request.value, 'ether')} </Cell>
+        <Cell> <Link route={`https://rinkeby.etherscan.io/address/${request.recipient}`}>
+                  <a>
+                      {request.recipient}
+                  </a>
+                </Link>
+        </Cell>
+        <Cell disabled={request.complete}> {request.approvalCount}/{approversCount} </Cell>
+        <Cell disabled={request.complete}> {request.approvalCount}/{approversCount} </Cell>
+        <Cell disabled={request.complete}>
+          {request.complete ? null: (
+              <Button color='red' basic onClick={this.onApprove} loading={this.state.loading}>
+                  Rechazar
+              </Button>
+            )
+          }
+        </Cell>
+        <Cell disabled={request.complete}>
           {request.complete ? null: (
               <Button color='green' basic onClick={this.onApprove} loading={this.state.loading}>
                   Aprobar
@@ -102,7 +116,7 @@ class RequestRow extends Component {
             )
           }
         </Cell>
-        <Cell>
+        <Cell disabled={request.complete}>
         {request.complete ? null: (
             <Button color='teal' basic onClick={this.onFinalize} loading={this.state.loading}>
               Finalizar
