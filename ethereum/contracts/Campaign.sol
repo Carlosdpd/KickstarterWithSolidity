@@ -42,6 +42,9 @@ contract Campaign{
         //Entero positivo que representa la cantidad de votos aprobados de la solicitud
         uint approvalCount;
 
+        //Entero positivo que representa la cantidad de votos rechazados de la solicitud
+        uint rejectsCount;
+
         //Tipo de dato mapping, que realiza la correspondencia de una dirección con un valor booleano, en cuanto se realice una votación, el mapeo de la dirección de esta variable será asignado a True
         mapping (address => bool) approvals;
     }
@@ -65,6 +68,9 @@ contract Campaign{
 
     //Mapeo de direcciones a valores booleanos que representan la lista de contribuyentes votantes
     mapping (address => bool) public approvers;
+
+
+    mapping (address => uint) public contributionWeight;
 
     //Contador de votantes
     uint public approversCount;
@@ -96,6 +102,9 @@ contract Campaign{
             (msg.value < maximumContribution || maximumContribution == 0 )&&
             (approversCount < maxContributors || maxContributors == 0));
 
+        //Acumulacion de contribuciones de una misma dirección
+        contributionWeight[msg.sender] = contributionWeight[msg.sender] + msg.value;
+
         //Este condicional permite a una dirección contribuir varias veces a una misma campaña
         if( approvers[msg.sender] == false){
 
@@ -118,7 +127,10 @@ contract Campaign{
            complete: false,
 
            //Se inicializa el contador de aprobados en cero.
-           approvalCount: 0
+           approvalCount: 0,
+
+           //Se inicializa el contador de rechazados en cero.
+           rejectsCount: 0
         });
 
         //Se agrega la solicitud recién creada al arreglo de solicitudes del contrato
@@ -143,6 +155,26 @@ contract Campaign{
 
         //Se incrementa la cuenta de votos
         request.approvalCount++;
+
+    }
+
+    //Función llamada por los contribuyentes de la campaña, para aprobar una solicitud, recibe un índice del arreglo de solicitudes para conocer cual solicitud desea votar para su aprobación
+    function rejectRequest(uint index) public{
+
+        //Localizar la solicitud según el índice
+        Request storage request = requests[index];
+
+        //Para que la función continúe su curso natural, es requerido que la dirección que llama la función sea un contribyente
+        require(approvers[msg.sender]);
+
+        //También es necesario que la dirección que llama a la función NO haya votado anteriormente
+        require(!request.approvals[msg.sender]);
+
+        //La dirección aprobó la solicitud
+        request.approvals[msg.sender] = true;
+
+        //Se incrementa la cuenta de votos
+        request.rejectsCount++;
 
     }
 
