@@ -9,7 +9,16 @@ class RequestRow extends Component {
   state = {
     loading: false,
     errorMessage: ''
+  };
+
+  epochToDate (epoch) {
+      let date = new Date(epoch*1000);
+
+      let formattedDate = date.getUTCDate() + '-' + (date.getUTCMonth() + 1)+ '-' + date.getUTCFullYear();
+
+      return formattedDate;
   }
+
 
   onApprove = async () => {
 
@@ -20,6 +29,41 @@ class RequestRow extends Component {
     try {
       const accounts = await web3.eth.getAccounts();
       await campaign.methods.approveRequest(this.props.id).send({
+        from: accounts[0]
+      });
+
+      fetch('http://192.168.2.9:8000/approved', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          campaign: this.props.address,
+          approverAddress: accounts[0],
+          id: this.props.id
+        })
+      })
+
+      Router.replaceRoute(`/campaigns/${this.props.address}/requests`);
+    } catch (err) {
+      this.setState( {errorMessage: err.message} );
+    }
+
+    this.setState({ loading: false, errorMessage: '' })
+
+
+  };
+
+  onReject = async () => {
+
+    const campaign =  Campaing(this.props.address);
+
+    this.setState({ loading: true, errorMessage: '' })
+
+    try {
+      const accounts = await web3.eth.getAccounts();
+      await campaign.methods.rejectRequest(this.props.id).send({
         from: accounts[0]
       });
 
@@ -84,12 +128,14 @@ class RequestRow extends Component {
   render(){
 
     const { Row, Cell } = Table;
-    const {id, request, approversCount} = this.props;
-    const readyToFinalize = request.approvalCount > approversCount/2;
+    const {id, request, approversCount, approvalRate, rejectedRate} = this.props;
+    const readyToApprove = request.approvalCount > approversCount*(approvalRate)/100;
+    const readyToReject = request.rejectsCount > approversCount*(rejectedRate)/100;
 
     return(
-      <Row  positive={readyToFinalize && !request.complete}>
+      <Row  positive={readyToApprove && !request.complete} negative={readyToReject && !request.complete}>
         <Cell disabled={request.complete}> {id} </Cell>
+        <Cell disabled={request.complete} collapsing = {true}> {this.epochToDate(request.created)} </Cell>
         <Cell disabled={request.complete}> {request.description} </Cell>
         <Cell disabled={request.complete}> {web3.utils.fromWei(request.value, 'ether')} </Cell>
         <Cell> <Link route={`https://rinkeby.etherscan.io/address/${request.recipient}`}>
@@ -99,10 +145,10 @@ class RequestRow extends Component {
                 </Link>
         </Cell>
         <Cell disabled={request.complete}> {request.approvalCount}/{approversCount} </Cell>
-        <Cell disabled={request.complete}> {request.approvalCount}/{approversCount} </Cell>
+        <Cell disabled={request.complete}> {request.rejectsCount}/{approversCount} </Cell>
         <Cell disabled={request.complete}>
           {request.complete ? null: (
-              <Button color='red' basic onClick={this.onApprove} loading={this.state.loading}>
+              <Button color='red' basic onClick={this.onReject} loading={this.state.loading}>
                   Rechazar
               </Button>
             )
@@ -125,6 +171,7 @@ class RequestRow extends Component {
 
         }
         </Cell>
+        <Cell disabled={request.complete} collapsing = {true}> {this.epochToDate(parseFloat(request.created) + 604800)} </Cell>
       </Row>
     );
   }

@@ -11,6 +11,8 @@ class CampaignNew extends Component {
     minimumContribution: '',
     maximumContribution: '',
     maximumCont:'',
+    approveRate:'',
+    rejectRate:'',
     errorMessage: '',
     loading: false
   }
@@ -23,7 +25,10 @@ class CampaignNew extends Component {
       const accounts = await web3.eth.getAccounts();
       await factory.methods.createCampaign(this.state.minimumContribution,
             this.state.maximumContribution,
-            this.state.maximumCont).send({
+            this.state.maximumCont,
+            this.state.approveRate,
+            this.state.rejectRate,
+          ).send({
           from: accounts[0]
       });
 
@@ -88,6 +93,24 @@ class CampaignNew extends Component {
               placeholder='Cantidad maxima de cotribuyentes que desea en su campaña, coloque 0 si no desea establecer un límite de contribuyentes'
               value={this.state.maximumCont}
               onChange={event => this.setState({ maximumCont: event.target.value })}
+             />
+          </Form.Field>
+
+          <Form.Field>
+            <label> Tasa de aprobación </label>
+            <Input
+              placeholder='Porcentaje de votos de aprobación necesarios para aprobar una solicitud, debe ser un número entre 1 y 100'
+              value={this.state.approveRate}
+              onChange={event => this.setState({ approveRate: event.target.value })}
+             />
+          </Form.Field>
+
+          <Form.Field>
+            <label> Tasa de rechazo </label>
+            <Input
+              placeholder='Porcentaje de votos de rechazo necesarios para rechazar una solicitud, debe ser un número entre 1 y 100'
+              value={this.state.rejectRate}
+              onChange={event => this.setState({ rejectRate: event.target.value })}
              />
           </Form.Field>
 

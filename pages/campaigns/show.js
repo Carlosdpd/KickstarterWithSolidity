@@ -32,7 +32,9 @@ class CampaignShow extends Component{
       balance: summary[3],
       requestCount: summary[4],
       approversCount: summary[5],
-      manager: summary[6],
+      approvalRate: summary[6],
+      rejectedRate: summary[7],
+      manager: summary[8],
     };
   }
 
@@ -45,7 +47,9 @@ class CampaignShow extends Component{
       maximumContribution,
       maximumContributors,
       requestCount,
-      approversCount
+      approversCount,
+      approvalRate,
+      rejectedRate
     } = this.props;
 
     const items = [
@@ -84,6 +88,16 @@ class CampaignShow extends Component{
         header: web3.utils.fromWei(balance, 'ether'),
         meta: 'Balance de la campaña (ether)',
         description: 'El balance de la campaña es cuanto dinero tiene esta campaña para gastar.'
+      },
+      {
+        header: approvalRate + "%",
+        meta: 'Tasa de aprobación',
+        description: 'Tasa de votos de aprobación para aprobar una solicitud.'
+      },
+      {
+        header: rejectedRate + "%",
+        meta: 'Tasa de rechazo',
+        description: 'Tasa de votos de rechazo para rechazar una solicitud.'
       }
     ];
 

@@ -18,6 +18,10 @@ class RequestIndex extends Component {
     const campaignManager = await campaign.methods.manager().call();
     const requestCount = await campaign.methods.getRequestCount().call();
     const approversCount = await campaign.methods.approversCount().call();
+    const approvalRate = await campaign.methods.approvalRate().call();
+    const rejectedRate = await campaign.methods.rejectedRate().call();
+    const currentBalance = await web3.eth.getBalance(address);
+    const balanceToEther = await web3.utils.fromWei(currentBalance, 'ether');
 
     const requests = await Promise.all(
       Array(parseInt(requestCount)).fill().map((element, index) => {
@@ -25,9 +29,7 @@ class RequestIndex extends Component {
       })
     );
 
-
-
-    return { address, requests,requestCount, approversCount, campaignManager, currentAccount };
+    return { address, requests,requestCount, approversCount, campaignManager, currentAccount, approvalRate, rejectedRate, balanceToEther  };
   }
 
   renderRows() {
@@ -38,7 +40,8 @@ class RequestIndex extends Component {
         request={request}
         address={this.props.address}
         approversCount={this.props.approversCount}
-
+        approvalRate={this.props.approvalRate}
+        rejectedRate={this.props.rejectedRate}
       />
     });
   }
@@ -50,6 +53,7 @@ class RequestIndex extends Component {
     return(
       <Layout>
           <h3> Solicitudes </h3>
+          <h3> Balance de la campaña: {this.props.balanceToEther} Ether </h3>
           <Link route={`/campaigns/${this.props.address}/requests/new`}>
             <a>
               <Button primary floated='right' style={{ marginBottom:10 }} disabled={this.props.campaignManager != this.props.currentAccount}>
@@ -62,6 +66,7 @@ class RequestIndex extends Component {
             <Header>
               <Row>
                 <HeaderCell> ID </HeaderCell>
+                <HeaderCell> Fecha creación </HeaderCell>
                 <HeaderCell> Descripción </HeaderCell>
                 <HeaderCell> Monto (ether) </HeaderCell>
                 <HeaderCell> Destino </HeaderCell>
@@ -70,6 +75,7 @@ class RequestIndex extends Component {
                 <HeaderCell> Rechazar </HeaderCell>
                 <HeaderCell> Aprobar </HeaderCell>
                 <HeaderCell> Finalizar </HeaderCell>
+                <HeaderCell> Expiración </HeaderCell>
               </Row>
             </Header>
             <Body>

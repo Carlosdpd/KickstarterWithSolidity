@@ -90,7 +90,16 @@ contract Campaign{
 
     //Constructor del contrato, recibe sus parámetros desde la función createCampaign de CampaignFactory
     function Campaign(uint minimum, uint maximum, uint maxCont, address creator, uint approveRate, uint rejectRate) public{
+
+        //Es requerido que el monto mínimo de aprobación sea mayor a cero
         require (minimum > 0);
+
+        //Es requerido que la tasa esté entre 0 y 100 (%)
+        require (approveRate > 0 && approveRate < 100);
+
+        //Es requerido que la tasa esté entre 0 y 100 (%)
+        require (rejectRate > 0 && rejectRate < 100);
+        
         manager = creator;
         minimumContribution = minimum;
         maximumContribution =  maximum;
