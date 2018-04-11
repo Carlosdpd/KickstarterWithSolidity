@@ -27,13 +27,14 @@ contract Campaign{
 
     //Estructura Request que representa una petición creada por el gerente del contrato
     struct Request{
+
         //String que representa la descripción de la solicitud
         string description;
 
         //Entero positivo que representa el valor que desea retirar la solicitud de la campaña
         uint value;
 
-        //Dirección Ethereum que recibirá los fondos de la solicitud
+        //Dirección que recibirá los fondos de la solicitud
         address recipient;
 
         //Variable booleana que representa si la solicitud ha sido completada o no
@@ -44,6 +45,9 @@ contract Campaign{
 
         //Entero positivo que representa la cantidad de votos rechazados de la solicitud
         uint rejectsCount;
+
+        //Entero que representa el momento en que se creó la solicitud
+        uint created;
 
         //Tipo de dato mapping, que realiza la correspondencia de una dirección con un valor booleano, en cuanto se realice una votación, el mapeo de la dirección de esta variable será asignado a True
         mapping (address => bool) approvals;
@@ -66,23 +70,17 @@ contract Campaign{
     //Número máximo de contribuyentes
     uint public maxContributors;
 
-    //Número para el porcentaje de aprobación
+    //Porcentaje de aprobación
     uint public approvalRate;
 
-    //Número para el porcentaje de rechazo
+    //Porcentaje de rechazo
     uint public rejectedRate;
-
-    uint public test2;
 
     //Mapeo de direcciones a valores booleanos que representan la lista de contribuyentes votantes
     mapping (address => bool) public approvers;
 
-
-    mapping (address => uint) public contributionWeight;
-
     //Contador de votantes
     uint public approversCount;
-
 
     //Función que restringe la posibilidad de una función a ser llamada, en este caso, retringe a la función a ser llamada por alguien que no sea el gerente de la campaña
     modifier restricted(){
@@ -99,24 +97,17 @@ contract Campaign{
         maxContributors = maxCont;
         approvalRate = approveRate;
         rejectedRate = rejectRate;
-
-        test2 = (30*(approvalRate))/100;
-
-
     }
 
-    //Functión que permite a una dirección contribuir a la campaña, la palabra reservada 'payable' indiva que la función debe recibir un valor en wei, el cual será agregado a la instancia del contrato
+    //Functión que permite a una dirección contribuir a la campaña, la palabra reservada 'payable' indica que la función debe recibir un valor en wei, el cual será agregado a la instancia del contrato
     function contribute() public payable{
         //Requerimientos básicos para que la función pueda seguir su curso natural:
         //-El valor con el que se llama a la función debe ser mayor a la mínima contribución establecida
-        //-El valor con el que se llama a la función debe ser menor a la máxima contribución establecida, o ser cero, para que no haya límite en la Contribución
+        //-El valor con el que se llama a la función debe ser menor a la máxima contribución establecida, o ser cero, para que no haya límite en la contribución
         //-El número de direcciones que aprueban una solicitud no puede ser mayor al número máximo de contribuyentes, o debe ser 0, en caso de que no haya límite
         require (msg.value > minimumContribution &&
             (msg.value < maximumContribution || maximumContribution == 0 )&&
             (approversCount < maxContributors || maxContributors == 0));
-
-        //Acumulacion de contribuciones de una misma dirección
-        contributionWeight[msg.sender] = contributionWeight[msg.sender] + msg.value;
 
         //Este condicional permite a una dirección contribuir varias veces a una misma campaña
         if( approvers[msg.sender] == false){
@@ -143,7 +134,10 @@ contract Campaign{
            approvalCount: 0,
 
            //Se inicializa el contador de rechazados en cero.
-           rejectsCount: 0
+           rejectsCount: 0,
+
+           //Momento de creación de la solicitud
+           created: now
         });
 
         //Se agrega la solicitud recién creada al arreglo de solicitudes del contrato
@@ -171,7 +165,7 @@ contract Campaign{
 
     }
 
-    //Función llamada por los contribuyentes de la campaña, para aprobar una solicitud, recibe un índice del arreglo de solicitudes para conocer cual solicitud desea votar para su aprobación
+    //Función llamada por los contribuyentes de la campaña, para rechazar una solicitud, recibe un índice del arreglo de solicitudes para conocer cual solicitud desea votar para su aprobación
     function rejectRequest(uint index) public{
 
         //Localizar la solicitud según el índice
@@ -183,7 +177,7 @@ contract Campaign{
         //También es necesario que la dirección que llama a la función NO haya votado anteriormente
         require(!request.approvals[msg.sender]);
 
-        //La dirección aprobó la solicitud
+        //La dirección rechazó la solicitud
         request.approvals[msg.sender] = true;
 
         //Se incrementa la cuenta de votos
@@ -196,33 +190,61 @@ contract Campaign{
         //Identificando la solicitud
         Request storage request = requests[index];
 
-        //Es requerido que hayan votado positivamente más de la mitad de los contribuyentes
+        //Momento en el que se realizo la finalización
+        uint finalizedMoment = now;
+
+        //Variable que refleja la validez de la transacción
+        bool valid;
+
+        //Si la transaccion tiene más de -cantidad de tiempo- se vuelve inválida
+        int transactionTime = int(request.created) +60 - int(finalizedMoment);
+
+        if (transactionTime < 0){
+            valid =  false;
+        }else{
+            valid = true;
+        }
+
+        //Es requerido que hayan votado positivamente o negativamente la cantidad establecida de contribuyentes en el constructor ( Variables approvalRate y rejectedRate )
         require((request.approvalCount > (approversCount*(approvalRate))/100) || (request.rejectsCount > (approversCount*(rejectedRate))/100));
 
         //Es requerido, además, que la solicitud no haya sido marcada como completada
         require(!request.complete);
 
-        //Si es el caso de aprobación, se traspasa el dinero
-        if(request.approvalCount > (approversCount*(approvalRate))/100){
+        //Si la transaccion es válida, se ejecuta normalmente
+        if (valid){
+            //Si es el caso de aprobación, se traspasa el dinero
+            if(request.approvalCount > (approversCount*(approvalRate))/100){
 
-            //Se transfieren los fondos a la dirección destindo
+                //Se transfieren los fondos a la dirección destindo
+                request.recipient.transfer(request.value);
+
+                //Se marca la solicitud como completada
+                request.complete = true;
+            }
+
+            //En caso que haya sido rechazada, se finaliza la solicitud sin enviar fondos
+            if(request.rejectsCount > (approversCount*(rejectedRate))/100){
+
+                //Se marca la solicitud como completada
+                request.complete = true;
+            }
+
+        //Si no es válida, se envían los fondos a la direccion destino
+        }else{
+
+            //Se transfieren los fondos a la dirección destino
             request.recipient.transfer(request.value);
 
             //Se marca la solicitud como completada
             request.complete = true;
         }
 
-        //En caso que haya sido rechazo, se finaliza la solicitud sin enviar fondos
-        if(request.rejectsCount > (approversCount*(rejectedRate))/100){
-
-            //Se marca la solicitud como completada
-            request.complete = true;
-        }
 
     }
 
     //Función que retorna un resumen de la campaña
-    function getSummary() public view returns(uint, uint, uint, uint, uint, uint, address){
+    function getSummary() public view returns(uint, uint, uint, uint, uint, uint, uint, uint, address){
 
         //Retornar todos los atributos de la campaña
         return (
@@ -232,6 +254,8 @@ contract Campaign{
           this.balance,
           requests.length,
           approversCount,
+          approvalRate,
+          rejectedRate,
           manager
           );
     }
