@@ -84,6 +84,8 @@ class RequestNew extends Component{
           <Form.Field>
             <label> Monto en ether</label>
             <Input
+              labelPosition='right'
+              label='ether'
               placeholder='Monto que desea retirar de la campaña'
               value={this.state.value}
               onChange={event => this.setState({ value: event.target.value })}

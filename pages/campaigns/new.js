@@ -99,7 +99,7 @@ class CampaignNew extends Component {
           <Form.Field>
             <label> Tasa de aprobación </label>
             <Input
-              placeholder='Porcentaje de votos de aprobación necesarios para aprobar una solicitud, debe ser un número entre 1 y 100'
+              placeholder='Porcentaje de votos de aprobación necesarios para aprobar una solicitud, debe ser un número entre 1 y 99'
               value={this.state.approveRate}
               onChange={event => this.setState({ approveRate: event.target.value })}
              />
