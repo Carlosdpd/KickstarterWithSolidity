@@ -67,6 +67,7 @@ class RequestIndex extends Component {
               <Row>
                 <HeaderCell> ID </HeaderCell>
                 <HeaderCell> Fecha creación </HeaderCell>
+                <HeaderCell> Expiración </HeaderCell>
                 <HeaderCell> Descripción </HeaderCell>
                 <HeaderCell> Monto (ether) </HeaderCell>
                 <HeaderCell> Destino </HeaderCell>
@@ -75,13 +76,14 @@ class RequestIndex extends Component {
                 <HeaderCell> Rechazar </HeaderCell>
                 <HeaderCell> Aprobar </HeaderCell>
                 <HeaderCell> Finalizar </HeaderCell>
-                <HeaderCell> Expiración </HeaderCell>
+
               </Row>
             </Header>
             <Body>
               {this.renderRows()}
             </Body>
           </Table>
+
           <div> Encontradas {this.props.requestCount} solicitudes. </div>
 
       </Layout>

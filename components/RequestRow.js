@@ -131,15 +131,18 @@ class RequestRow extends Component {
     const {id, request, approversCount, approvalRate, rejectedRate} = this.props;
     const readyToApprove = request.approvalCount > approversCount*(approvalRate)/100;
     const readyToReject = request.rejectsCount > approversCount*(rejectedRate)/100;
+    const currentTime = Date.now();
+    const expired = ((request.created + 604800 - currentTime) < 0);
 
     return(
-      <Row  positive={readyToApprove && !request.complete} negative={readyToReject && !request.complete}>
+      <Row  positive={readyToApprove && !request.complete} negative={expired} warning={readyToReject && !request.complete}>
         <Cell disabled={request.complete}> {id} </Cell>
         <Cell disabled={request.complete} collapsing = {true}> {this.epochToDate(request.created)} </Cell>
+        <Cell disabled={request.complete} collapsing = {true} negative={expired} > {this.epochToDate(parseFloat(request.created) + 604800)} </Cell>
         <Cell disabled={request.complete}> {request.description} </Cell>
         <Cell disabled={request.complete}> {web3.utils.fromWei(request.value, 'ether')} </Cell>
         <Cell> <Link route={`https://rinkeby.etherscan.io/address/${request.recipient}`}>
-                  <a>
+                  <a target="_blank">
                       {request.recipient}
                   </a>
                 </Link>
@@ -171,7 +174,7 @@ class RequestRow extends Component {
 
         }
         </Cell>
-        <Cell disabled={request.complete} collapsing = {true}> {this.epochToDate(parseFloat(request.created) + 604800)} </Cell>
+
       </Row>
     );
   }

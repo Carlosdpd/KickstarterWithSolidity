@@ -99,7 +99,7 @@ contract Campaign{
 
         //Es requerido que la tasa esté entre 0 y 100 (%)
         require (rejectRate > 0 && rejectRate < 100);
-        
+
         manager = creator;
         minimumContribution = minimum;
         maximumContribution =  maximum;
@@ -205,8 +205,10 @@ contract Campaign{
         //Variable que refleja la validez de la transacción
         bool valid;
 
-        //Si la transaccion tiene más de -cantidad de tiempo- se vuelve inválida
-        int transactionTime = int(request.created) +60 - int(finalizedMoment);
+        int week = 604800;
+
+        //Si la transaccion tiene más de 1 semana se vuelve inválida
+        int transactionTime = int(request.created) + week - int(finalizedMoment);
 
         if (transactionTime < 0){
             valid =  false;
