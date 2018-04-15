@@ -1,8 +1,12 @@
+//Dependencias necesarias
 const assert = require('assert');
+
+//Ganache permite crear nuestro propio ambiente Ethereum localmente
 const ganache = require('ganache-cli');
 const Web3 = require('web3');
 const web3 = new Web3(ganache.provider());
 
+//Contratos a utilizar
 const compiledFactory =  require('../ethereum/build/CampaignFactory.json');
 const compiledCampaign =  require('../ethereum/build/Campaign.json');
 
@@ -11,6 +15,7 @@ let factory;
 let campaignAddress;
 let campaign;
 
+//Método llamado antes de realizar cada una de las pruebas, el método crear campañas automáticamente para realizar pruebas
 beforeEach(async () => {
   accounts = await web3.eth.getAccounts();
 
@@ -25,24 +30,23 @@ beforeEach(async () => {
 
   const addresses = await factory.methods.getDeployedCampaigns().call();
   campaignAddress = addresses[0];
-
   campaign = await new web3.eth.Contract(JSON.parse(compiledCampaign.interface), campaignAddress);
 
 });
 
-describe('Campaigns', () => {
+describe('Pruebas a campañas', () => {
 
-  it('deploys a factory and a campaign', () => {
+  it('Instancia una CampaignFactory y una Campaña', () => {
     assert.ok(factory.options.address);
     assert.ok(campaign.options.address);
   });
 
-  it('marks caller as the campaign manager', async () => {
+  it('Marca al que llama a la campaña como gerente', async () => {
     const manager = await campaign.methods.manager().call();
     assert.equal( accounts[0],manager);
   });
 
-  it('allows people to contribute money and mark them as approvers', async () => {
+  it('Permite a los usuarios contribuir y marcarlos como contribuyentes', async () => {
     await campaign.methods.contribute().send({
       value: '200',
       from: accounts[1]
@@ -54,7 +58,7 @@ describe('Campaigns', () => {
 
   });
 
-  it('requires a minimum Contribution', async () => {
+  it('Requerir una contribución mínima', async () => {
     try {
       await campaign.methods.contribute().send({
         value:'5',
@@ -66,7 +70,7 @@ describe('Campaigns', () => {
     }
   });
 
-  it('allows manager to make a payment request', async () => {
+  it('Permite al gerente crear solicitudes', async () => {
     await campaign.methods.createRequest('buy batteries', '100', accounts[1]).send({
       from: accounts[0],
       gas: '1000000'
@@ -74,10 +78,10 @@ describe('Campaigns', () => {
 
     const request = await campaign.methods.requests(0).call();
 
-    assert.equal('buy batteries', request.description);
+    assert.equal('Comprar baterías', request.description);
   });
 
-  it('Processes requests', async () => {
+  it('Procesar solicitudes', async () => {
     await campaign.methods.contribute().send({
       from: accounts[0],
       value: web3.utils.toWei('10', 'ether')
@@ -103,7 +107,7 @@ describe('Campaigns', () => {
     balance = web3.utils.fromWei(balance, 'ether');
 
     balance = parseFloat(balance);
-    //VALUES OF ACCOUNTS DO NO GET CLEAN BETWEEN TESTS!!!!!! IMPORTANT!!!!!!!
+
     console.log(balance);
 
     assert(balance > 104);

@@ -1,5 +1,7 @@
+//Dependencias necesarias
 const routes = require('next-routes')();
 
+//Rutas de la aplicación web
 routes
   .add('/campaigns/new', '/campaigns/new')
   .add('/campaigns/:address', '/campaigns/show')

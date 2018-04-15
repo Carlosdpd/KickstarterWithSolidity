@@ -1,17 +1,19 @@
-//Use of express
+//Uso de express
 const express = require('express');
 const app = express();
+
 //Mongo Plugin
 var mongoose = require("mongoose");
-//Connection to database
+
+//Conexión a la base de datos
 mongoose.connect('mongodb://localhost/campaignDB');
 var db = mongoose.connection;
-
 db.on("error", console.error.bind(console, "Connection error:"));
 db.once("open", function() {
     console.log("Connection Succeeded.");
 });
 
+// Permitir solicitudes HTTP interactuar con el servidor
 app.use(function(req, res, next) {
 res.header('Access-Control-Allow-Credentials', true);
 res.header('Access-Control-Allow-Origin', req.headers.origin);
@@ -27,6 +29,7 @@ if ('OPTIONS' == req.method) {
 //Router
 const router = require("./routes/router.js")(app);
 
+//Puerto en el que corre el servidor que tiene la base de datos
 app.listen(8000, function () {
   console.log('Server listening on port 8000');
 });

@@ -1,9 +1,13 @@
+//Dependencias de interface, rutas y elementos útiles del contrato
 import React from 'react';
 import { Menu } from 'semantic-ui-react';
 import { Link } from '../routes';
 
 export default () => {
   return(
+
+    {/* Header principal de todas las páginas */}
+
     <Menu style = {{ marginTop: '10px' }} >
       <Link route='/'>
         <a className='item'>

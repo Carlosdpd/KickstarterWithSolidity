@@ -1,12 +1,13 @@
 "use strict";
-//Used for interaction with the database
+//Dependencia utilizada para la interacción con la base de datos
 var mongoose = require("mongoose");
-//Used for the creating of schemas un mongoDB
+//Dependencia utilizada para la creación de 'Schemas' que dan forma a los objetos a ser guardados en la base de datos
 var Schema = mongoose.Schema;
 
-
+//Modelo de aprobación a solicitud
 class approvedModel{
 
+    //Constructor
     constructor(name, schema){
         this.name = name;
         this.schema = schema;
@@ -14,6 +15,7 @@ class approvedModel{
     }
 
 
+    //Creación y guardado del objeto
     createApproved (approvedObj) {
 
             var newApproved = new this.model({
@@ -22,13 +24,16 @@ class approvedModel{
                 id: approvedObj.id
 
             });
+
+            //Guardar en la base de datos
             newApproved.save(function(err, data) {
                 if (err) console.log(err);
-                console.log('Approved created');
+                console.log('Aprobación almacenada');
             });
         }
 }
 
+//Modelo de solicitud aprobada a ser guardada en la base de datos
 var Approved = new approvedModel('Approved', new Schema({
     campaign: String,
     approverAddress: String,

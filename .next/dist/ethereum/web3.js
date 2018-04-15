@@ -10,19 +10,20 @@ var _web2 = _interopRequireDefault(_web);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var web3 = void 0;
+var web3 = void 0; //Dependencias necesarias
+
 
 if (typeof window !== 'undefined' && window.web3 !== 'undefined') {
-  //We are in the browser AND metamask is running
 
+  //Se está haciendo uso del navegador Y Metamask está activo
   web3 = new _web2.default(window.web3.currentProvider);
 } else {
-  //We are on the server OR the user is not running metamask
 
+  //Está siendo llamado del lado del servidor, o Metamask NO está activado
   var provider = new _web2.default.providers.HttpProvider('https://rinkeby.infura.io/O9rDBBXPQ0LgMzdxly6I');
 
   web3 = new _web2.default(provider);
 }
 
 exports.default = web3;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImV0aGVyZXVtL3dlYjMuanMiXSwibmFtZXMiOlsiV2ViMyIsIndlYjMiLCJ3aW5kb3ciLCJjdXJyZW50UHJvdmlkZXIiLCJwcm92aWRlciIsInByb3ZpZGVycyIsIkh0dHBQcm92aWRlciJdLCJtYXBwaW5ncyI6Ijs7Ozs7O0FBQUEsQUFBTyxBQUFQOzs7Ozs7QUFFQSxJQUFJLFlBQUo7O0FBRUEsSUFBSSxPQUFPLEFBQVAsV0FBa0IsQUFBbEIsZUFBaUMsT0FBTyxBQUFQLFNBQWdCLEFBQXJELGFBQWtFLEFBQ2hFO0FBRUE7O1NBQU8sQUFBSSxBQUFKLGtCQUFTLE9BQU8sQUFBUCxLQUFZLEFBQXJCLEFBQVAsQUFFRDtBQUxELE9BS00sQUFDSjtBQUVBOztNQUFNLFdBQVcsSUFBSSxjQUFLLEFBQUwsVUFBZSxBQUFuQixhQUNmLEFBRGUsQUFBakIsQUFJQTs7U0FBTyxBQUFJLEFBQUosa0JBQVMsQUFBVCxBQUFQLEFBQ0Q7QUFFRDs7a0JBQWUsQUFBZiIsImZpbGUiOiJ3ZWIzLmpzIiwic291cmNlUm9vdCI6Ii9Vc2Vycy9ob3JhY2lvY29sbC9EZXNrdG9wL1Rlc2lzL0tpY2tzdGFydGVyV2l0aFNvbGlkaXR5In0=
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImV0aGVyZXVtL3dlYjMuanMiXSwibmFtZXMiOlsiV2ViMyIsIndlYjMiLCJ3aW5kb3ciLCJjdXJyZW50UHJvdmlkZXIiLCJwcm92aWRlciIsInByb3ZpZGVycyIsIkh0dHBQcm92aWRlciJdLCJtYXBwaW5ncyI6Ijs7Ozs7O0FBQ0EsQUFBTzs7Ozs7O0FBRVAsSUFBSSxZQUFKLEdBSEE7OztBQUtBLElBQUksT0FBQSxBQUFPLFdBQVAsQUFBa0IsZUFBZSxPQUFBLEFBQU8sU0FBNUMsQUFBcUQsYUFBYSxBQUVoRTs7QUFDQTtTQUFPLEFBQUksa0JBQUssT0FBQSxBQUFPLEtBQXZCLEFBQU8sQUFBcUIsQUFFN0I7QUFMRCxPQUtNLEFBRUo7O0FBQ0E7TUFBTSxXQUFXLElBQUksY0FBQSxBQUFLLFVBQVQsQUFBbUIsYUFBcEMsQUFBaUIsQUFDZixBQUdGOztTQUFPLEFBQUksa0JBQVgsQUFBTyxBQUFTLEFBQ2pCO0FBRUQ7O2tCQUFBLEFBQWUiLCJmaWxlIjoid2ViMy5qcyIsInNvdXJjZVJvb3QiOiIvaG9tZS9jYXJsb3NkcGQvRGVza3RvcC9raWNrc3RhcnQifQ==

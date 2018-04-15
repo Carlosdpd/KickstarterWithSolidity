@@ -1,7 +1,6 @@
 module.exports = function (app) {
 
-	//Routes for saving campaigns
+	//Ruta para el procesamiento de solicitudes
     app.use('/', require('../main.controller.js'));
 
 };
- 

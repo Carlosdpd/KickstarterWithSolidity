@@ -1,21 +1,21 @@
 "use strict";
-//Used for interaction with the database
+//Dependencia utilizada para la interacción con la base de datos
 var mongoose = require("mongoose");
-//Used for the creating of schemas un mongoDB
+//Dependencia utilizada para la creación de 'Schemas' que dan forma a los objetos a ser guardados en la base de datos
 var Schema = mongoose.Schema;
 
-
+//Modelo de solicitud a una campaña
 class requestModel{
 
+    //Constructor
     constructor(name, schema){
         this.name = name;
         this.schema = schema;
         this.model = mongoose.model(this.name, this.schema);
     }
 
-
+    //Creación y guardado del objeto
     createRequest (requestObj) {
-
             var newRequest = new this.model({
                 campaignManager: requestObj.campaignManager,
                 toAddress: requestObj.toAddress,
@@ -23,13 +23,16 @@ class requestModel{
                 description: requestObj.description,
 
             });
+            
+            //Guardar en la base de datos
             newRequest.save(function(err, data) {
                 if (err) console.log(err);
-                console.log('Request created');
+                console.log('Solicitud almacenada');
             });
         }
 }
 
+//Modelo de solicitud a ser guardada en la base de datos
 var Request = new requestModel('Request', new Schema({
     campaignManager: String,
     toAddress: String,
