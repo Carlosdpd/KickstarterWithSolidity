@@ -5,6 +5,7 @@ import Campaign from '../../../ethereum/campaign';
 import web3 from '../../../ethereum/web3';
 import { Link, Router } from  '../../../routes';
 import Layout from '../../../components/Layout';
+import currentIP from '../../../ip.js'
 
 
 //Componente principal que renderiza el formulation para crear una solicitud nueva
@@ -53,7 +54,7 @@ class RequestNew extends Component{
         .send({ from: accounts[0] });
 
         //Se realiza la solicitud al servidor donde se encuentra la base de datos MongoDB para que guarde la información de la solicitud recién creada
-        fetch('http://192.168.2.9:8000/request', {
+        fetch('http://' + currentIP  + ':8000/request', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -64,6 +65,7 @@ class RequestNew extends Component{
             toAddress: recipient,
             value: web3.utils.toWei(value, 'ether'),
             description: description,
+            createdAt: Date.now()
           })
         });
 
@@ -71,7 +73,7 @@ class RequestNew extends Component{
         Router.pushRoute(`/campaigns/${this.props.address}/requests`);
 
     } catch (err) {
-      
+
       //En caso de que ocurra un error, se crear el mensaje de error que se mostrará al usuario
       this.setState({ errorMessage: ['Asegúrese de ingresar un número válido de ether o wei (Sin letras)', 'En caso de ser una lista, no deje elementos en blanco', 'Verifique estar usando su plug-in Metamask', 'Verifique su lista de transacciones pendientes'] })
     }

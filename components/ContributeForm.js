@@ -4,6 +4,7 @@ import { Form, Input, Message, Button } from 'semantic-ui-react';
 import Campaign from '../ethereum/campaign';
 import web3 from '../ethereum/web3';
 import { Router } from '../routes';
+import currentIP from '../ip.js'
 
 //Componente principal que renderiza el formulation para contribuir a una campaña
 class ContributeForm extends Component {
@@ -39,7 +40,7 @@ class ContributeForm extends Component {
       });
 
       //Se realiza la solicitud al servidor donde se encuentra la base de datos MongoDB para que guarde la información de la contribución realizada
-      fetch('http://192.168.2.9:8000/contribution', {
+      fetch('http://' + currentIP + ':8000/contribution', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -68,7 +69,7 @@ class ContributeForm extends Component {
   render(){
     return(
 
-      {/* Formulario de un solo campo que rellena el usuario para contribuir a una campaña, inicialmente no tiene mensaje de error */}
+    
       <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
         <Form.Field>
           <label> Monto de contribución </label>

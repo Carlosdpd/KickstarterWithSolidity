@@ -5,6 +5,7 @@ import Layout from '../../components/Layout';
 import factory from '../../ethereum/factory';
 import web3 from '../../ethereum/web3';
 import { Router} from '../../routes';
+import currentIP from '../../ip.js'
 
 //Componente principal que renderiza el formulation para crear una campaña nueva
 class CampaignNew extends Component {
@@ -49,7 +50,7 @@ class CampaignNew extends Component {
       const lastCampaing =  await factory.methods.getDeployedCampaigns().call();
 
       //Se realiza la solicitud al servidor donde se encuentra la base de datos MongoDB para que guarde la información de la campaña recién creada
-      fetch('http://192.168.2.9:8000/campaign', {
+      fetch('http://' + currentIP  + ':8000/campaign', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -62,7 +63,7 @@ class CampaignNew extends Component {
           maximumContribution: this.state.maximumContribution,
           maximumCont: this.state.maximumCont,
           approveRate:this.state.approveRate,
-          rejectRate:this.state.rejectRate:
+          rejectRate:this.state.rejectRate
         })
       });
 

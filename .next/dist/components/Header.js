@@ -15,40 +15,41 @@ var _routes = require('../routes');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var _jsxFileName = '/home/carlosdpd/Desktop/kickstart/components/Header.js';
+//Dependencias de interface, rutas y elementos útiles del contrato
 
 exports.default = function () {
   return _react2.default.createElement(_semanticUiReact.Menu, { style: { marginTop: '10px' }, __source: {
       fileName: _jsxFileName,
-      lineNumber: 7
+      lineNumber: 9
     }
   }, _react2.default.createElement(_routes.Link, { route: '/', __source: {
       fileName: _jsxFileName,
-      lineNumber: 8
+      lineNumber: 10
     }
   }, _react2.default.createElement('a', { className: 'item', __source: {
       fileName: _jsxFileName,
-      lineNumber: 9
+      lineNumber: 11
     }
   }, 'Financiaci\xF3n Colectiva')), _react2.default.createElement(_semanticUiReact.Menu.Menu, { position: 'right', __source: {
       fileName: _jsxFileName,
-      lineNumber: 14
+      lineNumber: 16
     }
   }, _react2.default.createElement(_routes.Link, { route: '/', __source: {
       fileName: _jsxFileName,
-      lineNumber: 15
+      lineNumber: 17
     }
   }, _react2.default.createElement('a', { className: 'item', __source: {
       fileName: _jsxFileName,
-      lineNumber: 16
+      lineNumber: 18
     }
   }, 'Campa\xF1as')), _react2.default.createElement(_routes.Link, { route: '/campaigns/new', __source: {
       fileName: _jsxFileName,
-      lineNumber: 21
+      lineNumber: 23
     }
   }, _react2.default.createElement('a', { className: 'item', __source: {
       fileName: _jsxFileName,
-      lineNumber: 22
+      lineNumber: 24
     }
   }, '+'))));
 };
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNvbXBvbmVudHMvSGVhZGVyLmpzIl0sIm5hbWVzIjpbIlJlYWN0IiwiTWVudSIsIkxpbmsiLCJtYXJnaW5Ub3AiXSwibWFwcGluZ3MiOiI7Ozs7OztBQUFBLEFBQU87Ozs7QUFDUCxBQUFTOztBQUNULEFBQVMsQUFBWSxBQUVyQjs7Ozs7O2tCQUFlLFlBQU0sQUFDbkI7eUJBQ0UsQUFBQyx1Q0FBSyxPQUFTLEVBQUUsV0FBakIsQUFBZSxBQUFhO2dCQUE1QjtrQkFBQSxBQUNFO0FBREY7R0FBQSxrQkFDRSxBQUFDLDhCQUFLLE9BQU4sQUFBWTtnQkFBWjtrQkFBQSxBQUNFO0FBREY7cUJBQ0UsY0FBQSxPQUFHLFdBQUgsQUFBYTtnQkFBYjtrQkFBQTtBQUFBO0tBRkosQUFDRSxBQUNFLEFBS0YsK0NBQUMsY0FBRCxzQkFBQSxBQUFNLFFBQUssVUFBWCxBQUFxQjtnQkFBckI7a0JBQUEsQUFDRTtBQURGO3FCQUNFLEFBQUMsOEJBQUssT0FBTixBQUFZO2dCQUFaO2tCQUFBLEFBQ0U7QUFERjtxQkFDRSxjQUFBLE9BQUcsV0FBSCxBQUFhO2dCQUFiO2tCQUFBO0FBQUE7S0FGSixBQUNFLEFBQ0UsQUFLRixpQ0FBQSxBQUFDLDhCQUFLLE9BQU4sQUFBWTtnQkFBWjtrQkFBQSxBQUNFO0FBREY7cUJBQ0UsY0FBQSxPQUFHLFdBQUgsQUFBYTtnQkFBYjtrQkFBQTtBQUFBO0tBaEJSLEFBQ0UsQUFPRSxBQU9FLEFBQ0UsQUFTVDtBQTFCRCIsImZpbGUiOiJIZWFkZXIuanMiLCJzb3VyY2VSb290IjoiL2hvbWUvY2FybG9zZHBkL0Rlc2t0b3Ava2lja3N0YXJ0In0=
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNvbXBvbmVudHMvSGVhZGVyLmpzIl0sIm5hbWVzIjpbIlJlYWN0IiwiTWVudSIsIkxpbmsiLCJtYXJnaW5Ub3AiXSwibWFwcGluZ3MiOiI7Ozs7OztBQUNBLEFBQU87Ozs7QUFDUCxBQUFTOztBQUNULEFBQVMsQUFBWSxBQUVyQjs7Ozs7QUFMQTs7a0JBS2UsWUFBTSxBQUNuQjt5QkFFRSxBQUFDLHVDQUFLLE9BQVMsRUFBRSxXQUFqQixBQUFlLEFBQWE7Z0JBQTVCO2tCQUFBLEFBQ0U7QUFERjtHQUFBLGtCQUNFLEFBQUMsOEJBQUssT0FBTixBQUFZO2dCQUFaO2tCQUFBLEFBQ0U7QUFERjtxQkFDRSxjQUFBLE9BQUcsV0FBSCxBQUFhO2dCQUFiO2tCQUFBO0FBQUE7S0FGSixBQUNFLEFBQ0UsQUFLRiwrQ0FBQyxjQUFELHNCQUFBLEFBQU0sUUFBSyxVQUFYLEFBQXFCO2dCQUFyQjtrQkFBQSxBQUNFO0FBREY7cUJBQ0UsQUFBQyw4QkFBSyxPQUFOLEFBQVk7Z0JBQVo7a0JBQUEsQUFDRTtBQURGO3FCQUNFLGNBQUEsT0FBRyxXQUFILEFBQWE7Z0JBQWI7a0JBQUE7QUFBQTtLQUZKLEFBQ0UsQUFDRSxBQUtGLGlDQUFBLEFBQUMsOEJBQUssT0FBTixBQUFZO2dCQUFaO2tCQUFBLEFBQ0U7QUFERjtxQkFDRSxjQUFBLE9BQUcsV0FBSCxBQUFhO2dCQUFiO2tCQUFBO0FBQUE7S0FqQlIsQUFFRSxBQU9FLEFBT0UsQUFDRSxBQVNUO0FBM0JEIiwiZmlsZSI6IkhlYWRlci5qcyIsInNvdXJjZVJvb3QiOiIvaG9tZS9jYXJsb3NkcGQvRGVza3RvcC9raWNrc3RhcnQifQ==

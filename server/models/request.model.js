@@ -21,9 +21,10 @@ class requestModel{
                 toAddress: requestObj.toAddress,
                 value: requestObj.value,
                 description: requestObj.description,
+                createdAt: requestObj.createdAt
 
             });
-            
+
             //Guardar en la base de datos
             newRequest.save(function(err, data) {
                 if (err) console.log(err);
@@ -38,6 +39,7 @@ var Request = new requestModel('Request', new Schema({
     toAddress: String,
     value: String,
     description: String,
+    createdAt: Number
 }));
 
 module.exports = Request;

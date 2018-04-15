@@ -4,6 +4,7 @@ import { Table, Button, Message } from  'semantic-ui-react';
 import web3 from '../ethereum/web3';
 import Campaing from '../ethereum/campaign';
 import { Router, Link } from '../routes';
+import currentIP from '../ip.js'
 
 //Componente principal que renderiza la fila que contiene información de cada solicitud
 class RequestRow extends Component {
@@ -41,7 +42,7 @@ class RequestRow extends Component {
       });
 
       //Se realiza la solicitud al servidor donde se encuentra la base de datos MongoDB para que guarde la información de la aprobación realizada
-      fetch('http://192.168.2.9:8000/approved', {
+      fetch('http://' + currentIP  + ':8000/approved', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -86,7 +87,7 @@ class RequestRow extends Component {
       });
 
       //Se realiza la solicitud al servidor donde se encuentra la base de datos MongoDB para que guarde la información del rechazo realizado
-      fetch('http://192.168.2.9:8000/rejected', {
+      fetch('http://' + currentIP  + ':8000/rejected', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -132,7 +133,7 @@ class RequestRow extends Component {
       });
 
       //Se realiza la solicitud al servidor donde se encuentra la base de datos MongoDB para que guarde la información de la finalización realizada
-      fetch('http://192.168.2.9:8000/finalized', {
+      fetch('http://' + currentIP  + ':8000/finalized', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -177,12 +178,6 @@ class RequestRow extends Component {
     const expired = ((request.created + 604800 - currentTime) < 0);
 
     return(
-      {/* Se verifica de que color se mostrará la fila dependiendo de:
-        -Está lista para ser aprobada
-        -Está lista para ser rechazada
-        -Expiró
-        -Está deshabilitada debido a que ya fue completada
-         */ }
       <Row  positive={readyToApprove && !request.complete} negative={expired} warning={readyToReject && !request.complete}>
         <Cell disabled={request.complete}> {id} </Cell>
         <Cell disabled={request.complete} collapsing = {true}> {this.epochToDate(request.created)} </Cell>

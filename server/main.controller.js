@@ -51,6 +51,7 @@ router.post('/request', function (req, res) {
   requestObj.toAddress = req.body.toAddress;
   requestObj.value = req.body.value;
   requestObj.description = req.body.description;
+  requestObj.createdAt = req.body.createdAt;
 
   Request.createRequest(requestObj);
 
