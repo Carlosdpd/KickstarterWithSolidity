@@ -174,8 +174,9 @@ class RequestRow extends Component {
     const readyToReject = request.rejectsCount > approversCount*(rejectedRate)/100;
 
     //Se obtiene la fecha actual, y se verifica si la solicitud está expirada, en caso afirmativo, la solicitud se mostrará en color rojo
-    const currentTime = Date.now();
-    const expired = ((request.created + 604800 - currentTime) < 0);
+    const currentTime =  Math.floor((new Date).getTime()/1000);
+    const expired = ((request.created - currentTime + 604800) < 0);
+    console.log(expired);
 
     return(
       <Row  positive={readyToApprove && !request.complete} negative={expired} warning={readyToReject && !request.complete}>
