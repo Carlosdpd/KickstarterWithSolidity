@@ -1,4 +1,4 @@
 //Port for app.js
-let currentIP = '192.168.2.2';
+let currentIP = '';
 
 module.exports = currentIP;
