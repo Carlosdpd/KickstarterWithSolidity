@@ -25,7 +25,7 @@ contract CampaignFactory{
 //Contrato principal, en este contrato se implementa toda la lógica y funcionalidad de las campañas
 contract Campaign{
 
-    //Estructura Request que representa una petición creada por el gerente del contrato
+    //Estructura Request que representa una solicitud creada por el gerente del contrato
     struct Request{
 
         //String que representa la descripción de la solicitud
@@ -108,7 +108,7 @@ contract Campaign{
         rejectedRate = rejectRate;
     }
 
-    //Functión que permite a una dirección contribuir a la campaña, la palabra reservada 'payable' indica que la función debe recibir un valor en wei, el cual será agregado a la instancia del contrato
+    //Función que permite a una dirección contribuir a la campaña, la palabra reservada 'payable' indica que la función debe recibir un valor en wei, el cual será agregado a la instancia del contrato
     function contribute() public payable{
         //Requerimientos básicos para que la función pueda seguir su curso natural:
         //-El valor con el que se llama a la función debe ser mayor a la mínima contribución establecida
@@ -130,7 +130,7 @@ contract Campaign{
     //Función que crea una solicitud, recibe una descripción, un valor y una dirección destino (Nótese el atributo restricted: sólo puede ser llamada por el gerente de la campaña)
     function createRequest(string description, uint value, address recipient) public restricted {
 
-        //Se crea la nueva estructura con los parametros recibidos
+        //Se crea la nueva estructura con los parámetros recibidos
         Request memory newRequest = Request({
            description: description,
            value: value,
@@ -224,10 +224,10 @@ contract Campaign{
 
         //Si la transaccion es válida, se ejecuta normalmente
         if (valid){
-            //Si es el caso de aprobación, se traspasa el dinero
+            //Si es el caso de aprobación, se traspasa el ether
             if(request.approvalCount > (approversCount*(approvalRate))/100){
 
-                //Se transfieren los fondos a la dirección destindo
+                //Se transfieren los fondos a la dirección destino
                 request.recipient.transfer(request.value);
 
                 //Se marca la solicitud como completada
