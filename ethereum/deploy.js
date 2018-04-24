@@ -20,8 +20,8 @@ const deploy  = async () => {
   //Lista de cuentas asociadas al "Mneumonic" en 'provider'
   accounts = await web3.eth.getAccounts();
 
-  //Se muestra por consola, la cuenta que hace 'deploy' en la red
-  console.log('Deploying from account', accounts[0]);
+  //Se muestra por consola, la cuenta que hace despliegue en la red
+  console.log('Desplegando desde la dirección: ', accounts[0]);
 
   //Creación del contrato en la red.
   const result = await new web3.eth.Contract(JSON.parse(compiledFactory.interface))
@@ -29,7 +29,7 @@ const deploy  = async () => {
     .send({ gas: '2000000', from : accounts[0]});
 
   //Se muestra por pantalla la dirección donde el contrato fue creado.
-  console.log('Contract deployed to:', result.options.address);
+  console.log('Contrato desplegado en :', result.options.address);
 
 };
 

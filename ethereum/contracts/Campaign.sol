@@ -7,7 +7,7 @@ contract CampaignFactory{
     //Único atributo del contrato generador de campañas, el presente atributo se utiliza para devolver todas las direcciones instancias generadas
     address[] public deployedCampaigns;
 
-    //Función que genera instancias del contrato Campaign, recibe un monto mínimo de contribución, un monto máximo, y un número máximo de contribuyentes
+    //Funcion que genera instancias del contrato Campaign, recibe un monto minimo de contribucion, un monto maximo, un numero maximo de contribuyentes, una tasa de aprobación y una tasa de rechazo
     function createCampaign(uint minimum, uint maximum, uint maxCont, uint approveRate, uint rejectRate) public{
         address newCampaign = new Campaign(minimum, maximum, maxCont, msg.sender, approveRate, rejectRate);
 

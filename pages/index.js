@@ -14,7 +14,7 @@ class CampaignIndex extends Component {
     //Llamada al contrato para obtener todas las direcciones de los contratos existentes
     const campaigns = await factory.methods.getDeployedCampaigns().call();
 
-    //Se rotrna la lista de contratos, equivale a: return {campaigns: campaigns};
+    //Se rotorna la lista de contratos, equivale a: return {campaigns: campaigns};
     return { campaigns };
   }
 

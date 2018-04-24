@@ -5,7 +5,7 @@ const app = next({
   dev: process.env.NODE_ENV !== 'production '
 });
 
-//Lista de Scripts necesarios al momento de iniciar la aplicación web
+//Lista de modulos necesarios al momento de iniciar la aplicación web
 
 //Lado del servidor encargado de manejar el servidor donde se encuentra la base datos MongoDB
 const serverside = require('./server/app.js');

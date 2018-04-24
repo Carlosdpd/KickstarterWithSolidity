@@ -7,7 +7,7 @@ import web3 from '../../ethereum/web3';
 import { Router} from '../../routes';
 import currentIP from '../../ip.js'
 
-//Componente principal que renderiza el formulation para crear una campaña nueva
+//Componente principal que renderiza el formulario para crear una campaña nueva
 class CampaignNew extends Component {
 
   //Variable 'state' que guardará los datos desde el formulario
@@ -67,7 +67,7 @@ class CampaignNew extends Component {
         })
       });
 
-      //Una creada la campaña, se redirige al usuario a la página inicial donde podrá ver su campaña recién creada
+      //Una vez creada la campaña, se redirige al usuario a la página inicial donde podrá ver su campaña recién creada
       Router.pushRoute('/');
 
     } catch (err) {

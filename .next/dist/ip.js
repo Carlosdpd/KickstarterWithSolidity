@@ -1,7 +1,7 @@
 'use strict';
 
 //Port for app.js
-var currentIP = '192.168.2.2';
+var currentIP = '';
 
 module.exports = currentIP;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImlwLmpzIl0sIm5hbWVzIjpbImN1cnJlbnRJUCIsIm1vZHVsZSIsImV4cG9ydHMiXSwibWFwcGluZ3MiOiI7O0FBQUE7QUFDQSxJQUFJLFlBQVksQUFBaEI7O0FBRUEsT0FBTyxBQUFQLFVBQWlCLEFBQWpCIiwiZmlsZSI6ImlwLmpzIiwic291cmNlUm9vdCI6Ii9ob21lL2Nhcmxvc2RwZC9EZXNrdG9wL2tpY2tzdGFydCJ9
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImlwLmpzIl0sIm5hbWVzIjpbImN1cnJlbnRJUCIsIm1vZHVsZSIsImV4cG9ydHMiXSwibWFwcGluZ3MiOiI7O0FBQUE7QUFDQSxJQUFJLFlBQVksQUFBaEI7O0FBRUEsT0FBTyxBQUFQLFVBQWlCLEFBQWpCIiwiZmlsZSI6ImlwLmpzIiwic291cmNlUm9vdCI6Ii9Vc2Vycy9ob3JhY2lvY29sbC9EZXNrdG9wL1Rlc2lzL0tpY2tzdGFydGVyV2l0aFNvbGlkaXR5In0=

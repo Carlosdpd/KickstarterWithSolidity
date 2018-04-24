@@ -189,4 +189,45 @@ describe('Pruebas a campañas', () => {
 
   });
 
+  //Prueba que permite procesar solicitudes rechazadas
+  it('Procesar solicitudes rechazadas', async () => {
+
+    //Primero se realiza una contribución
+    await campaign.methods.contribute().send({
+      from: accounts[0],
+      value: web3.utils.toWei('10', 'ether')
+    });
+
+    //Se crea una solicitud
+    await campaign.methods.createRequest('A', web3.utils.toWei('5', 'ether'), accounts[1]).send({
+      from:accounts[0],
+      gas: '1000000'
+    });
+
+    //Se rechaza la solicitud recién creada
+    await campaign.methods.rejectRequest(0).send({
+      from:accounts[0],
+      gas: '1000000'
+    });
+
+    //Se finaliza la solicitud recién rechazada
+    await campaign.methods.finalizeRequest(0).send({
+      from:accounts[0],
+      gas:'1000000'
+    });
+
+    //Se obtiene el balance de la campaña
+    let balance = await web3.eth.getBalance(campaignAddress);
+
+    //El balance se pasa de wei a ether
+    balance = web3.utils.fromWei(balance, 'ether');
+    balance = parseFloat(balance);
+
+    console.log(balance);
+
+    //Se verifica que los fondos contruibuidos sigan en la cuenta
+    assert(balance < 11 && balance > 0);
+
+  });
+
 });

@@ -12,6 +12,8 @@ if (typeof window !== 'undefined' && window.web3 !== 'undefined') {
 
   //Está siendo llamado del lado del servidor, o Metamask NO está activado
   const provider = new Web3.providers.HttpProvider(
+
+    //Nodo Infura al que se conectará  nuestra instancia de Metamask para interactuar con la red Rinkeby de Ethereum
     'https://rinkeby.infura.io/O9rDBBXPQ0LgMzdxly6I'
   );
 
