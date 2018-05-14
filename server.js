@@ -5,7 +5,7 @@ const app = next({
   dev: process.env.NODE_ENV !== 'production '
 });
 
-//Lista de modulos necesarios al momento de iniciar la aplicación web
+//Lista de módulos necesarios al momento de iniciar la aplicación web
 
 //Lado del servidor encargado de manejar el servidor donde se encuentra la base datos MongoDB
 const serverside = require('./server/app.js');
@@ -20,6 +20,6 @@ const handler = routes.getRequestHandler(app);
 app.prepare().then(() => {
   createServer(handler).listen(3000, (err) => {
     if (err) throw err;
-    console.log('Ready on localhost:3000');
+    console.log('Listo en localhost:3000');
   });
 });

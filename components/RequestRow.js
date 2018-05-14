@@ -9,7 +9,7 @@ import currentIP from '../ip.js'
 //Componente principal que renderiza la fila que contiene información de cada solicitud
 class RequestRow extends Component {
 
-  //Variable 'state' que guarda los datos de 'loading' y mensaje de erroe cuando se haga click en 'Aprobar','Rechazar' o 'Finalziar'
+  //Variable 'state' que guarda los datos de 'loading' y mensaje de erroe cuando se haga click en 'Aprobar','Rechazar' o 'Finalizar'
   state = {
     loading: false,
     errorMessage: ''
@@ -163,7 +163,7 @@ class RequestRow extends Component {
 
   render(){
 
-    //En método render, asignamos varibales de importancia que darán información al usuario con respecto a cada solicitud
+    //En el método render, asignamos varibales de importancia que darán información al usuario con respecto a cada solicitud
     const { Row, Cell } = Table;
     const {id, request, approversCount, approvalRate, rejectedRate} = this.props;
 
@@ -182,7 +182,7 @@ class RequestRow extends Component {
       <Row  positive={readyToApprove && !request.complete} negative={expired} warning={readyToReject && !request.complete}>
         <Cell disabled={request.complete}> {id} </Cell>
         <Cell disabled={request.complete} collapsing = {true}> {this.epochToDate(request.created)} </Cell>
-        <Cell disabled={request.complete} collapsing = {true} negative={expired} > {this.epochToDate(parseFloat(request.created) + 604800)} </Cell>
+        <Cell disabled={request.complete} collapsing = {true} > {this.epochToDate(parseFloat(request.created) + 604800)} </Cell>
         <Cell disabled={request.complete}> {request.description} </Cell>
         <Cell disabled={request.complete}> {web3.utils.fromWei(request.value, 'ether')} </Cell>
         {/* Link que dirige al usuario a la página de chequeo de cuentas en tiempo real de Ethereum */}

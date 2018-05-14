@@ -4,7 +4,7 @@ var mongoose = require("mongoose");
 //Dependencia utilizada para la creación de 'Schemas' que dan forma a los objetos a ser guardados en la base de datos
 var Schema = mongoose.Schema;
 
-//Modelo de aprobación a solicitud
+//Modelo de aprobación de una solicitud
 class approvedModel{
 
     //Constructor
@@ -33,7 +33,7 @@ class approvedModel{
         }
 }
 
-//Modelo de solicitud aprobada a ser guardada en la base de datos
+//Modelo de aprobacion de solicitud a ser guardada en la base de datos
 var Approved = new approvedModel('Approved', new Schema({
     campaign: String,
     approverAddress: String,

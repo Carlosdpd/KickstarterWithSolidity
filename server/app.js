@@ -10,7 +10,7 @@ mongoose.connect('mongodb://localhost/campaignDB');
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "Connection error:"));
 db.once("open", function() {
-    console.log("Connection Succeeded.");
+    console.log("Conectado a la base de datos.");
 });
 
 // Permitir solicitudes HTTP interactuar con el servidor
@@ -29,7 +29,7 @@ if ('OPTIONS' == req.method) {
 //Router
 const router = require("./routes/router.js")(app);
 
-//Puerto en el que corre el servidor que tiene la base de datos
+//Puerto en el que corre el servidor que maneja la base de datos
 app.listen(8000, function () {
-  console.log('Server listening on port 8000');
+  console.log('Escuchando en el puerto 8000');
 });

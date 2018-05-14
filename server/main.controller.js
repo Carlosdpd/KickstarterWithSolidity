@@ -16,7 +16,7 @@ const bodyParser = require("body-parser");
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
-//Ruta que maneja 'contribution', que almacena una solicitud
+//Ruta que maneja 'contribution', que almacena una contribución
 router.post('/contribution', function (req, res) {
 
   let contributionObj = {};

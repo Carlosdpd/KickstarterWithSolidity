@@ -8,7 +8,7 @@ import Layout from '../../../components/Layout';
 import currentIP from '../../../ip.js'
 
 
-//Componente principal que renderiza el formulation para crear una solicitud nueva
+//Componente principal que renderiza el formulario para crear una solicitud nueva
 class RequestNew extends Component{
 
   //Variable 'state' que guardará los datos desde el formulario

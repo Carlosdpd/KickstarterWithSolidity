@@ -6,7 +6,7 @@ import web3 from '../ethereum/web3';
 import { Router } from '../routes';
 import currentIP from '../ip.js'
 
-//Componente principal que renderiza el formulation para contribuir a una campaña
+//Componente principal que renderiza el formulario para contribuir a una campaña
 class ContributeForm extends Component {
 
   //Variable 'state' que guardará los datos desde el formulario
@@ -53,7 +53,7 @@ class ContributeForm extends Component {
         })
       })
 
-      //Una vez realizada la contribución, se actualiza la página actual para que el usuario pueda verale
+      //Una vez realizada la contribución, se actualiza la página actual para que el usuario pueda verla
       Router.replaceRoute(`/campaigns/${this.props.address}`);
     } catch (err) {
 
@@ -69,7 +69,7 @@ class ContributeForm extends Component {
   render(){
     return(
 
-    
+
       <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
         <Form.Field>
           <label> Monto de contribución </label>
